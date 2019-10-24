@@ -1,0 +1,16 @@
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<div id="app-2">
+  <span v-bind:title="message">
+    Hover this text to get message!!!
+  </span>
+</div>
+
+<script>
+  var app2 = new Vue({
+    el: "#app-2",
+    data: {
+      message: "You are in this page on " + new Date().toLocaleString()
+    }
+  })
+</script>
