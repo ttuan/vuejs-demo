@@ -13,3 +13,9 @@ Learn Vuejs by example, step by step
     focus, ...
     `v-on:click="doSomething"` = `@click="doSomething"` = `@[event]="doSomething"`
 * `v-model="message"`: Modeling for data binding
+
+
+#### Computed
+- Same function???
+- Create a getter, we can call from vm, ex: `vm.reversedMessage`, always
+    depended on `vm.message`
