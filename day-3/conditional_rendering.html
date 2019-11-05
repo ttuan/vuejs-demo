@@ -1,0 +1,17 @@
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<div id="app">
+  <div v-if="awesome">Vue is awesome!</div>
+  <div v-else-if="type === 'C'">v else if</div>
+  <div v-else>Oh, No!!!</div>
+</div>
+
+<script>
+  var app = new Vue({
+    el: "#app",
+    data: {
+      awesome: false,
+      type: 'C'
+    }
+  })
+</script>

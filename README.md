@@ -30,3 +30,13 @@ Learn Vuejs by example, step by step
 -  Using the watch option allows us to perform an asynchronous operation (accessing an API), limit how often we perform that operation, and set intermediary states until we get a final answer.
 
 ===> Compute and watch used to observe a property (firstName, lastName, question, answer, ...)
+
+#### Class and style bindings
++ Class Syntax:
+  + `v-bind:class="{ active: isActive }"`
+  + `v-bind:class="classObject"` with computed function `classObject`
+  + `v-bind:class="[activeClass, errorClass]"`
+
+#### Conditional Rendering
++ `v-if="variable"`, `v-else` and `v-else-if="condition"`, if you put
+    `v-else-if` after `v-else`, Vue just ignores it, not raises error.
