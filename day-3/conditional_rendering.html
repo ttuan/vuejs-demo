@@ -4,6 +4,17 @@
   <div v-if="awesome">Vue is awesome!</div>
   <div v-else-if="type === 'C'">v else if</div>
   <div v-else>Oh, No!!!</div>
+
+  <!-- <template v-if="loginType == 'username'"> -->
+  <!--   <label for="">Username</label> -->
+  <!--   <input placeholder="Enter your username" key="username-input"> -->
+  <!-- </template> -->
+  <!-- <template v-else> -->
+  <!--   <label for="">Email</label> -->
+  <!--   <input placeholder="Enter your email address" key="email-input"> -->
+  <!-- </template> -->
+
+  <div v-show="ok">V Show Ok</div>
 </div>
 
 <script>
@@ -11,7 +22,8 @@
     el: "#app",
     data: {
       awesome: false,
-      type: 'C'
+      type: 'C',
+      ok: true
     }
   })
 </script>

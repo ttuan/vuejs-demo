@@ -40,3 +40,5 @@ Learn Vuejs by example, step by step
 #### Conditional Rendering
 + `v-if="variable"`, `v-else` and `v-else-if="condition"`, if you put
     `v-else-if` after `v-else`, Vue just ignores it, not raises error.
++ Vue often re-using rendered elements instead of rendering form scratch. For
+    example, when `<input>` element,
