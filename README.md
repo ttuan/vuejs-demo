@@ -73,3 +73,31 @@ Learn Vuejs by example, step by step
     To add more property (data), you should use `vm.$set(vm.property_name, 'attribute', value)`
 
 + To render a block of multiple elements, use `v-for` with `<template>`
+
+#### Event handling
++ `v-on:click="counter + 1"` or `v-on:click="function_name"`
+
+Event modifier:
+We can use `event.preventDefault()` in function, but it's better if we only put
+logic in function instead of pollute it with dealing DOM event.
+
+Use `.stop`, `.prevent`, `.capture`, `.self`, `.once`, `.passive`:
+`v-on:click.stop="doThis"`.
+
+You can use `v-on:click.prevent.self="xxx"`, but PLEASE CARE THE ORDER OF
+EVENTS.
+
+Key modifer:
++ `v-on:keyup.enter="submit"`, `v-on:keyup.13="submit"`
+
+System modifer:
++ `@keyup.alt.67="clear"` or `@click.ctrl="doSomething"` or
+    `@click.ctrl.exact="doSomething"`
+
+Mouse button modifier:
++ `.left`, `.right`, `.middle`
+
+Benefit of using `v-on`:
++ Easy to locate the handle function by skimming HTML
++ keep ViewModel code can be pure logic and DOM free - easier to test
++ When ViewModel is destroyed, all event handler are automatically removed.
