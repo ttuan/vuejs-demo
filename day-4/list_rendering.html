@@ -1,0 +1,97 @@
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<div id="app">
+  <!-- v-for with array -->
+  <ul>
+    <li v-for="(item, index) in items" v-bind:key="item.id">
+      {{ index }} - {{ item.name }} - {{ item.grade }}
+    </li>
+  </ul>
+
+  <!-- v-for with object -->
+  <ul>
+    <li v-for="(value, name, index) in object">
+      {{ index }} - {{ name }} - {{ value }}
+    </li>
+  </ul>
+
+  <!-- v-for with computed property -->
+  <ul>
+    <li v-for="n in evenNumbers">
+      {{ n }}
+    </li>
+  </ul>
+
+  <!-- v-for with methods -->
+  <ul>
+    <li v-for="n in even(numbers)">
+      {{ n }}
+    </li>
+  </ul>
+
+  <!-- v-for with range -->
+  <ul>
+    <li v-for="n in 10">
+      {{ n }}
+    </li>
+  </ul>
+
+  <!-- v-for with template -->
+  <ul>
+    <template v-for="item in items">
+      <li>{{ item.name }}</li>
+      <li class="divider" role="presentation"></li>
+    </template>
+  </ul>
+
+  <!-- v-for with v-if -->
+  <li v-for="item in items" v-if="item.grade === '3'">
+    {{ item }}
+  </li>
+
+  <!-- v-for with component -->
+  <my-component v-for="item in items" :key="item.id"></my-component>
+  <!-- use props -->
+  <my-component
+    v-for="(item, index) in items"
+    v-bind:item="item"
+    v-bind:index="index"
+    v-bind:key="item.id"
+  ></my-component>
+
+
+</div>
+
+<script>
+  var app = new Vue({
+    el: "#app",
+    data: {
+      items: [
+        {name: "Jame", grade: "7"},
+        {name: "Harry", grade: "5"},
+        {name: "Elliot", grade: "3"},
+        {name: "Tyrel", grade: "3"},
+      ],
+      object: {
+        title: "This is title",
+        author: "Jane Doe",
+        published_at: "2019-11-11",
+      },
+      numbers: [0, 1, 2, 3, 4, 5]
+    },
+    computed: {
+      evenNumbers: function () {
+        return this.numbers.filter(function (number) {
+          return number % 2 === 0
+        })
+      }
+    },
+    methods: {
+      even: function(numbers) {
+        return numbers.filter(function(number) {
+          return number % 2 === 0
+        })
+      }
+    }
+  })
+</script>

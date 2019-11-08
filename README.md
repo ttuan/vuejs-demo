@@ -41,4 +41,35 @@ Learn Vuejs by example, step by step
 + `v-if="variable"`, `v-else` and `v-else-if="condition"`, if you put
     `v-else-if` after `v-else`, Vue just ignores it, not raises error.
 + Vue often re-using rendered elements instead of rendering form scratch. For
-    example, when `<input>` element,
+    example, when `<input>` element is in both if and else block, Vuejs will
+    rerender it and keep same value which you entered. To ignore this, use `key`
+    on each `<input>` tag.
++ `v-show` vs `v-if`:
+  + `v-if` is also lazy, if the condition is fale in initial render, it will not
+      do anything. The conditional block won't be rendered until the condition
+      becomes true for the first time.
+  + `v-show` is simpler - the element is always rendred regardless of initial
+      condition, with CSS-based toggling.
+  + `v-if` has higher toggle costs (cause rerender), `v-show` has higher initial
+      render costs (cause it render when initial). Use `v-show` when you need to
+      toggle something very often, and use `v-if` if the condition is unlikely
+      to change at runtime.
+
+#### List rendering
++ `v-for`: Use syntax: `v-for="item in items"`, support: `v-for="(item, index) in items"`. V-for can use to print all attribute of an object. `v-for="(value, name, index) in object"`
++ `v-for` should use with `v-bind:key="unique-key"`. ????
+
++ Array Change dection: `push()`, `pop`, `shift`, `unshift`, `splice`, `sort`,
+    `reverse`
+
+    `filter()`, `concat()`, `slice()` always return a new array - non-mutating
+    methods.
+
++ Cause of JS limitations, Vue can not detect change when you call:
+    `app.items[0] = newValue`, or `vm.items.length = newLength`. Please use
+    `app.$set(app.items, indexOfItem, newValue)` or
+    `vm.items.splice(newLength)`.
+
+    To add more property (data), you should use `vm.$set(vm.property_name, 'attribute', value)`
+
++ To render a block of multiple elements, use `v-for` with `<template>`
