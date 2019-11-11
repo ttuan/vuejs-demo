@@ -1,0 +1,64 @@
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<div id="app">
+  <input v-model="message" placeholder="edit me">
+  <p>Message is: {{ message }}</p>
+
+  <textarea id="" name="" cols="30" rows="10" v-model="message" placeholder="add multiple line"></textarea>
+  <p style="white-space: pre-line;"> {{ message }}</p>
+
+  <input type="checkbox" id="checkbox" v-model="checked">
+  <label for="checkbox">{{ checked }}</label><br/>
+
+  <input type="checkbox" id="jack" value="Jack" v-model="names">
+  <label for="jack">Jack</label>
+  <input type="checkbox" id="harry" value="Harry" v-model="names">
+  <label for="harry">Harry</label>
+  <input type="checkbox" id="tom" value="Tom" v-model="names">
+  <label for="tom">Tom</label>
+  <p>{{ names }}</p>
+
+
+  <input type="radio" id="one" value="One" v-model="picked">
+  <label for="one">One</label>
+  <input type="radio" id="two" value="Tow" v-model="picked">
+  <label for="two">Two</label>
+  <p>{{ picked }}</p>
+
+  <select v-model="selected">
+  <!-- <select v-model="selected" multiple> -->
+    <!-- <option value="" disabled> Please select one </option> -->
+    <!-- <option value="A"> A </option> -->
+    <!-- <option value="B"> B </option> -->
+    <!-- <option value="C"> C </option> -->
+    <option v-for="option in options" :value="option.value">
+      {{ option.text }}
+    </option>
+  </select>
+  <p>{{ selected }}</p>
+
+  <input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
+
+  <input type="number" v-model.number="age">
+</div>
+
+<script>
+  var app = new Vue({
+    el: "#app",
+    data: {
+      message: "Hello",
+      checked: false,
+      names: [],
+      picked: null,
+      selected: 'A',
+      options: [
+        { text: "option 1", value: "A" },
+        { text: "option 2", value: "B" },
+        { text: "option 3", value: "C" }
+      ],
+      toggle: true,
+      age: 0
+    }
+  })
+</script>
+

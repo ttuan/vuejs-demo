@@ -101,3 +101,19 @@ Benefit of using `v-on`:
 + Easy to locate the handle function by skimming HTML
 + keep ViewModel code can be pure logic and DOM free - easier to test
 + When ViewModel is destroyed, all event handler are automatically removed.
+
+#### Form Input Bindings
++ `v-model` ignore initial `value`, `checked`, `selected` attributes found on
+    any form elements. So we should declare the initial value on JS side, insde
+      `data` option.
+
+   This applies for `text`, `textarea`, `checkboxes`, `raido` button, `select`
+   options.
+
++ Modifiers:
+  + `v-model.lazy="msg"`: `v-model` syncs the input with data after each `input`
+      event. if you add `lazy`, it will sync after `change` events instead.
+  + `v-model.number="age"`: when you enter a string to age, `.number` will
+      convert it by using `parseFloat()`, if it can not convert, vue will return
+      original value.
+  + `v-model.trim="msg"`: `trim` whitespace from user input
