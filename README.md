@@ -117,3 +117,40 @@ Benefit of using `v-on`:
       convert it by using `parseFloat()`, if it can not convert, vue will return
       original value.
   + `v-model.trim="msg"`: `trim` whitespace from user input
+
+
+#### Component Basic
++ Syntax:
+```js
+Vue.component('component-name', {
+  data: function() {
+    ....
+  }
+}
+```
+Component is a REUSEABLE VUE INSTANCES => Same as `new Vue()`, so they accept
+same options like `data`, `computed`, `watch`, `method`, lifecycle hooks. They
+only exxceptions are a few root-specific options like `el`.
+
++ `data` in component MUST BE A FUNCTION. so that each instance can maintain an
+    independent copy of returned data objcet. If we don't put it into a
+    function, data changed in a single component will affact the data of all
+    other instances.
+
++ There are 2 types of component registration: global and local. Using
+    `Vue.component` ~= global
+
++ Props are custom attributes which we can register on a component. When we pass
+    it to prop attribute, it becomes a property on that component instance.
+
+When you don't know exactly how many records will be passed,you should use syntax:
+`v-for`, `v-bind:title="xxx"` instead :D
+But if there are many attributes which you need to pass to component, it becomes
+very annoying. so, passing "post" object is a better choice :D
+
++ Child component can emit an event by using syntax:
+    `v-on:click="$emit('event-name')`, so parent component can handle it by
+    using: `v-on:event-name="action code/ function name"`
+
+
++ Use `<slot></slot>` to pass content to a component.

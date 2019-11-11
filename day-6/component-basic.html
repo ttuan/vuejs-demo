@@ -1,0 +1,135 @@
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<div id="app">
+  <button-counter></button-counter>
+  <button-counter></button-counter>
+  <button-counter></button-counter>
+
+  <blog-post title="My first post"></blog-post>
+  <blog-post title="Second post"></blog-post>
+  <blog-post title="Third post"></blog-post>
+
+  <blog-post
+    v-for="post in posts"
+    v-bind:key="post.id"
+    v-bind:title="post.title"
+  ></blog-post>
+
+  <refactored-blog-post
+    v-for="post in posts"
+    v-bind:key="post.id"
+    v-bind:post="post"
+  ></refactored-blog-post>
+
+  <div :style="{ fontSize: postFontSize + 'em' }">
+    <refactored2-blog-post
+      v-for="post in posts"
+      v-bind:key="post.id"
+      v-bind:post="post"
+      v-on:enlarge-text="postFontSize += 0.1"
+    ></refactored2-blog-post>
+  </div>
+
+  <div :style="{ fontSize: postFontSize + 'em' }">
+    <refactored3-blog-post
+      v-for="post in posts"
+      v-bind:key="post.id"
+      v-bind:post="post"
+      v-on:enlarge-text="onEnlargeText"
+    ></refactored3-blog-post>
+  </div>
+
+  <custom-input v-model="searchText" ></custom-input>
+
+  <alert-box> Some thing bad happended </alert-box>
+</div>
+
+<script>
+  Vue.component('button-counter', {
+    data: function() {
+      return {
+        count: 0
+      }
+    },
+    template: '<button v-on:click="count++">You clicked me {{count}} times.</button>'
+  })
+
+  Vue.component('blog-post', {
+    props: ['title'],
+    template: '<h3>{{ title }} </h3><div v-html="content"></div>'
+  })
+
+  Vue.component('refactored-blog-post', {
+    props: ['post'],
+    template: `
+      <div class="blog-post">
+        <h3>{{ post.title }}</h3>
+        <div v-html="post.content"></div>
+      </div>
+    `
+  })
+
+  Vue.component('refactored2-blog-post', {
+    props: ['post'],
+    template: `
+      <div class="refactored2-blog-post">
+        <h3>{{ post.title }}</h3>
+        <button v-on:click="$emit('enlarge-text')">
+          Enlarge text
+        </button>
+        <div v-html="post.content"></div>
+      </div>
+    `
+  })
+
+  Vue.component('refactored3-blog-post', {
+    props: ['post'],
+    template: `
+      <div class="refactored3-blog-post">
+        <h3>{{ post.title }}</h3>
+        <button v-on:click="$emit('enlarge-text', 0.1)">
+          Enlarge text
+        </button>
+        <div v-html="post.content"></div>
+      </div>
+    `
+  })
+
+  Vue.component('custom-input', {
+    props: ['value'],
+    template: `
+      <input v-bind:value="value"
+      v-on:input="$emit('input', $event.target.value)"
+      >
+    `
+  })
+
+  Vue.component('alert-box', {
+    props: ['value'],
+    template: `
+      <div class="demo-alert-box">
+        <strong>Error</strong>
+        <slot></slot>
+      </div>
+    `
+  })
+
+  var app = new Vue({
+    el: "#app",
+    data: {
+      posts: [
+        { id: 1, title: "First post" },
+        { id: 1, title: "Second post" },
+        { id: 1, title: "Third post" },
+      ],
+      postFontSize: 1,
+      searchText: ''
+    },
+    methods: {
+      onEnlargeText: function (enlargeAmount) {
+        this.postFontSize += enlargeAmount
+      }
+    }
+  })
+</script>
+
