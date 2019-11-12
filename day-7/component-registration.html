@@ -1,0 +1,28 @@
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<div id="app">
+</div>
+
+<script>
+var ComponentA = { }
+var ComponentB = { }
+var ComponentC = { }
+
+new Vue({
+  el: '#app',
+  components: {
+    'component-a': ComponentA,
+    'component-b': ComponentB
+  }
+})
+
+
+import ComponentA from './ComponentA.vue'
+
+export default {
+  components: {
+    ComponentA // ~= ComponentA: ComponentA
+  }
+}
+</script>
+

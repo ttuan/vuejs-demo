@@ -154,3 +154,46 @@ very annoying. so, passing "post" object is a better choice :D
 
 
 + Use `<slot></slot>` to pass content to a component.
+
+
+#### Component In-Depth
++ Global registering all components means that even if you stop using a
+    component, it could still be included in your final build (If you're using
+    build system like Webpack). It increases the amount of JavaScript your users
+    have to download.
+NOTE: Locally registered components are not available in subcomponents.
+
++ When we have many base components, to auto regis them, use [Automatic Global Registration of Base components](https://vuejs.org/v2/guide/components-registration.html#Automatic-Global-Registration-of-Base-Components)
+
+
++ Data from parent to child component is a one-way-down binding. Vue prevents
+    child components from accidentally mutating the parent's state.
+There are usually two cases where it’s tempting to mutate a prop:
+
+The prop is used to pass in an initial value;
+
+1. the child component wants to use it as a local data property afterwards. In this case, it’s best to define a local data property that uses the prop as its initial value:
+
+```js
+props: ['initialCounter'],
+data: function () {
+  return {
+    counter: this.initialCounter
+  }
+}
+```
+
+2. The prop is passed in as a raw value that needs to be transformed. In this case, it’s best to define a computed property using the prop’s value:
+
+```js
+props: ['size'],
+computed: {
+  normalizedSize: function () {
+    return this.size.trim().toLowerCase()
+  }
+}
+```
+Note that objects and arrays in JavaScript are passed by reference, so if the prop is an array or object, mutating the object or array itself inside the child component will affect parent state.
+
++ Non-prop attributes: A non-prop attribute is an attribute that is passed to a
+    component, but does not have a corresponding prop defined.
