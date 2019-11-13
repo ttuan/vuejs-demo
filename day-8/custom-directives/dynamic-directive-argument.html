@@ -1,0 +1,49 @@
+<script src="./../../vue.js"></script>
+
+<div id="app">
+  <p>Scroll down the page</p>
+  <p v-pin="200">Stick me 200px from the top of the page</p>
+</div>
+
+<div id="app2">
+  <h3>Scroll down inside this section ↓</h3>
+  <p v-pin2:[direction]="200">I am pinned onto the page at 200px to the left.</p>
+
+  <div v-demo="{ color: 'white', text: 'hello!' }"></div>
+</div>
+
+
+<script>
+  Vue.directive('pin', {
+    bind: function(el, binding, vnode) {
+      el.style.position = 'fixed'
+      el.style.top = binding.value + 'px'
+    }
+  })
+
+  Vue.directive('pin2', {
+    bind: function(el, binding, vnode) {
+      el.style.position = 'fixed'
+      var s = (binding.arg == 'left' ? 'left' : 'top')
+      el.style[s] = binding.value + 'px'
+    }
+  })
+
+  // If your directive needs multiple values, you can also pass in a JavaScript object literal. Remember, directives can take any valid JavaScript expression.
+  Vue.directive('demo', function (el, binding) {
+    console.log(binding.value.color) // => "white"
+    console.log(binding.value.text)  // => "hello!"
+  })
+
+  new Vue({el: "#app"})
+
+  new Vue({
+    el: "#app2",
+    data: function () {
+      return {
+        direction: 'left'
+      }
+    }
+  })
+</script>
+

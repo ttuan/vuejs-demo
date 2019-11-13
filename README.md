@@ -245,3 +245,17 @@ Use can use global mixin, but take care yourself
 
 Use `Vue.config.optionMergeStrategies` to custom merge strategy :D
 
+
+#### Custom Directives
+`v-model` and `v-show`, ... is directives. Vue allows us to write a custom
+directive like that :v
+
+Hook functions in directive:
++ `bind`: called only once, when the directive is first bound to the element.
++ `inserted`: called when the bound element has been inserted into its parent node
++ `update`: called after the containing component’s VNode has updated, but possibly before its children have updated
++ `componentUpdated`: called after the containing component’s VNode and the VNodes of its children have updated.
++ `unbind`: called only once, when the directive is unbound from the element.
+
+
+https://vuejs.org/v2/guide/custom-directive.html#Directive-Hook-Arguments

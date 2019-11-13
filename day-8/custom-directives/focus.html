@@ -1,0 +1,18 @@
+<script src="./../../vue.js"></script>
+
+<div id="app">
+  <input type="">
+  <input v-focus>
+</div>
+
+<script>
+  // Register a global custom directive called `v-focus`
+  Vue.directive('focus', {
+    inserted: function (el) {
+      el.focus()
+    }
+  })
+
+  new Vue({el: "#app"})
+</script>
+
