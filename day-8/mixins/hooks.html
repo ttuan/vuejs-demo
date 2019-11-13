@@ -1,0 +1,20 @@
+<script src="./../../vue.js"></script>
+
+<div id="app">
+</div>
+
+<script>
+  var mixin = {
+    created: function () {
+      console.log("mixin hooked")
+    }
+  }
+
+  new Vue({
+    mixins: [mixin],
+    created: function () {
+      console.log("component hooked")
+    }
+  })
+</script>
+

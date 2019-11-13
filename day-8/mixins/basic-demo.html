@@ -1,0 +1,25 @@
+<script src="./../../vue.js"></script>
+
+<div id="app">
+
+</div>
+
+<script>
+  var mixin = {
+    created: function () {
+      this.hello()
+    },
+    methods: {
+      hello: function () {
+        console.log("Hello mixins")
+      }
+    }
+  }
+
+  var Component = Vue.extend({
+    mixins: [mixin]
+  })
+
+  var component = new Component()
+</script>
+

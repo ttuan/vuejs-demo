@@ -204,3 +204,44 @@ Note that objects and arrays in JavaScript are passed by reference, so if the pr
 
 #### Custom Events
 TODO
+
+#### Slot
+Same like
+
+#### Dynamic and Asyns Components
++ Use `<keep-alive>` to cached a component after they are created for the first time
+
+
+```
+<!-- Inactive components will be cached! -->
+<keep-alive>
+  <component v-bind:is="currentTabComponent"></component>
+</keep-alive>
+```
+
++ Async components
+In large applications, we may need to divide the app into smaller chunks and only load a component from the server when it’s needed. To make that easier, Vue allows you to define your component as a factory function that asynchronously resolves your component definition. Vue will only trigger the factory function when the component needs to be rendered and will cache the result for future re-renders.
+https://vuejs.org/v2/guide/components-dynamic-async.html#Async-Components
+
+https://github.com/gothinkster/vue-realworld-example-app/blob/master/src/router/index.js#L10
+
+#### Handling Edge Cases
+TODO
+
+### Transistion and Animation
+TODO
+
+### Reusability & Composition
+#### Mixin
+Like 'module' in Ruby :v It can be include in the component (same as class)
+
+When a mixin and the component itself contain overlapping options, they will be “merged” using appropriate strategies. data objects undergo a recursive merge, with the component’s data taking priority in cases of conflicts.
+
+Hook functions with the same name are merged into an array so that all of them will be called. Mixin hooks will be called before the component’s own hooks.
+
+Options that expect object values, for example methods, components and directives, will be merged into the same object. The component’s options will take priority when there are conflicting keys in these objects
+
+Use can use global mixin, but take care yourself
+
+Use `Vue.config.optionMergeStrategies` to custom merge strategy :D
+
