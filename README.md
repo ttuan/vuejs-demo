@@ -197,3 +197,10 @@ Note that objects and arrays in JavaScript are passed by reference, so if the pr
 
 + Non-prop attributes: A non-prop attribute is an attribute that is passed to a
     component, but does not have a corresponding prop defined.
+
+**Component** and **props** has automatic case transformation.
+
+`v-model` on a component uses `value` as the prop and `input` as the event.
+
+#### Custom Events
+TODO
