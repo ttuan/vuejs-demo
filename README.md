@@ -259,3 +259,31 @@ Hook functions in directive:
 
 
 https://vuejs.org/v2/guide/custom-directive.html#Directive-Hook-Arguments
+
+#### Render Function & JSX
+TODO
+
+#### Plugin
+`vue-router` is an example plugin
+
+Using a Plugin
+
+`Vue.use(MyPlugin)`
+
+
+```
+// When using CommonJS via Browserify or Webpack
+var Vue = require('vue')
+var VueRouter = require('vue-router')
+
+// Don't forget to call this
+Vue.use(VueRouter)
+```
+
+#### Filters
+
+Vue.js allows you to define filters that can be used to apply common text formatting.
+Can use in mustache interpolations (`{{message | capitalize }}`) or in v-bind
+(`v-bind:id="rawID | formatID"`)
+
+Can apply multiple filters: {{ message | filterA(arg1, arg2) | filterB }}
