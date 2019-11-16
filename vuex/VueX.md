@@ -17,3 +17,11 @@
     state directly in an action
 
 => We decouple our components from the API logic
+
++ When we have many computed properties and methods, which are mapped with Vuex
+    state, getters or functions, the component code will be long, it's here `mapState`, `mapGetters` and `mapActions` come
+
+
++ After we split code into modules, we need to refactor code for `state`.
+  State is mapped with module name, but actions, mutations, getters are still
+  registered under the global namespace
