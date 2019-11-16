@@ -1,6 +1,9 @@
 # Style Guide
 ## Essential
 1. Multi-word component names
+
+- Why: Để tránh xung đột với các phần tử HTML, vì các phần tử html đều là từ đơn
+
 ```js
 Vue.component('todo-item', {
   // ...
@@ -13,8 +16,8 @@ export default {
 
 2. Component `data` must be a function
 
-- To sperate data, each component instance to only manage its own data.
-
+- Why: Giả sử ta có 1 component TodoList, nếu muốn tái sử dụng, khi khởi tạo nó sẽ đều tham chiếu tới cùng 1 object data, thay đổi tiêu đề của 1 danh sách cũng sẽ thay đổi tiêu đề những cái còn lại. Chúng ta muốn **mỗi component quản lý dữ liệu riêng**
+ 
 ```js
 Vue.component('some-comp', {
   data: function () {
@@ -34,6 +37,10 @@ export default {
 ```
 
 3. Prop definitions should be as detailed as possible
+
+- W: 
+	* Coi đây như là 1 doc giúp component dễ hiểu, rõ ràng hơn
+	* Khi code ở mt development, Vue sẽ cảnh báo nếu prop được truyền vào không đúng định dạng, giúp phát hiện lỗi sớm.
 
 ```js
 // Even better!
@@ -55,6 +62,8 @@ props: {
 
 4. Keyed `v-for`: Always use `key` with `v-for`
 
+- W: Có key này thì Vue sẽ phân biệt được các phần tử, sẽ xử lý theo hướng dễ đoán hơn.
+
 ```html
 <ul>
   <li
@@ -67,6 +76,11 @@ props: {
 ```
 
 5. Advoid `v-if` with `v-for`
+
+- W: Khi xử lý các directives, v-for có độ ưu tiên cao hơn v-if, nếu để cùng 1 dòng, mỗi khi muốn render, chúng ta đều phải duyệt qua cả 1 mảng to, check điều kiện, cho dù các records thoả mãn điều kiện kia không đổi.
+- Nếu dùng computed, danh sách đã lọc sẽ chỉ được tính toán lại nếu có thay đổi liên quan tới mảng to -> lọc danh sách hiệu quả hơn.
+- Khi ta chỉ duyệt qua danh sách những records thoả mãn điều kiện, việc render sẽ hiệu quả hơn nhiều (k phải duyệt hết toàn bộ nữa)
+- Logic được tách khỏi view
 
 ```html
 <ul>
@@ -89,6 +103,9 @@ props: {
 ```
 
 6. Component style scoping: Style in top-levl `App` component and in layout components may be global, but all other components should always be scoped.
+
+- W: Đảm bảo style css sẽ chỉ được áp dụng ở component mong muốn
+
 
 ```html
 <template>
@@ -173,6 +190,7 @@ components/
 
 6. Order of the words in component names: Component names should start with the highest-level (often most general) worlds and end with descriptive modifying words.
 
+- W: Để dễ nhìn + biết được cái nào là quan trọng :v 1 dạng gom chức năng.
 ```
 components/
 |- SearchButtonClear.vue
@@ -287,6 +305,10 @@ computed: {
 
 14. Simple computed properties: Complex computed properties should be split init as many simpler properties as possible.
 
+- W: 
+	* Dễ test hơn
+	* Dễ đọc hơn
+	* Dễ thích nghi hơn với các thay đổi trong yêu cầu kĩ thuật.
 ```
 // Bad
 computed: {
@@ -298,7 +320,6 @@ computed: {
     )
   }
 }
-
 // Good
 computed: {
   basePrice: function () {
@@ -325,6 +346,7 @@ computed: {
 16. Directive shorthands: `:` for `v-bind:`, `@` for `v-on` and `#` for `v-slot` should be used always or never.
 
 ## Recommended
+
 1. Component/instance options order
 
 * Side Effect: `el`
@@ -422,40 +444,3 @@ Props and events should be preferred for parent-child component communication, i
 Vuex should be preferred for global state management, instead of this.$root or a global event bus.
 
 // TODO
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
