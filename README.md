@@ -23,6 +23,11 @@ Learn Vuejs by example, step by step
   No, **computed properties are cached based on their reactive dependencies**. A computed property will only re-evaluate when some of its reactive dependencies have changed. This means as long as message has not changed, multiple access to the reversedMessage computed property will immediately return the previously computed result without having to run the function again.
   In comparison, a method invocation will always run the function whenever a re-render happens.
 
+- Computed vs Methods:
+  * Computed can not receive arguments. so it only can be used with data in component.
+  * Computed will only re-evaluate when some of it's dependencies have changed.  => property is cached.
+      But method invocation will always run the function whenever a re-render happens
+
 #### Watched property
 - Use `watched` when you have some data need to change based on other data (ex:
     `fullName` need to change if you change `firstName` or `lastName`)
