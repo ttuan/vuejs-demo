@@ -1,5 +1,6 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <div id="app">
   <table class="table table-striped">
@@ -42,35 +43,27 @@
     methods: {
       upvoteStory: function (story) {
         story.upvotes++;
-        $.ajax({
-          url: "http://127.0.0.1:3000/api/stories/" + story.id,
-          type: "PATCH",
-          data: story
-        })
+        axios.patch('http://127.0.0.1:3000/api/stories/' + story.id, story)
       },
 
       deleteStory: function (story) {
-        var index = vm.stories.indexOf(story);
-        vm.stories.splice(index, 1);
-
-        $.ajax({
-          url: "http://127.0.0.1:3000/api/stories" + story.id,
-          type: "DELETE"
-        })
+        var index = this.$parent.stories.indexOf(story);
+        this.$parent.stories.splice(index, 1);
+        axios.delete('http://127.0.0.1:3000/api/stories/' + story.id)
       }
     }
   });
 
-  var app = new Vue({
+  var vm = new Vue({
     el: "#app",
     data: {
       stories: []
     },
     mounted: function() {
-      $.get('http://127.0.0.1:3000/api/stories', function(data) {
-        console.log(data)
-        app.stories = data
-      })
+      axios.get('http://127.0.0.1:3000/api/stories')
+        .then(function (response) {
+          Vue.set(vm, 'stories', response.data)
+        })
     }
   })
 </script>
