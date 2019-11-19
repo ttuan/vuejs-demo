@@ -1,0 +1,77 @@
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<div id="app">
+  <table class="table table-striped">
+    <tr>
+      <th>#</th>
+      <th>Plot</th>
+      <th>Writer</th>
+      <th>Upvotes</th>
+      <th>Actions</th>
+      <tr v-for="story in stories" is="the-story" :story="story">
+      </tr>
+    </tr>
+  </table>
+</div>
+
+<template id="template-story-raw">
+  <tr>
+    <td>{{story.id}}</td>
+    <td><span>{{story.plot}}</span></td>
+    <td><span>{{story.writer}}</span></td>
+    <td><span>{{story.upvotes}}</span></td>
+    <td>
+      <div class="btn-group">
+        <buton @click="upvoteStory(story)" class="btn btn-primary">
+          Upvote
+        </buton>
+
+        <buton @click="deleteStory(story)" class="btn btn-primary">
+          Delete
+        </buton>
+      </div>
+    </td>
+  </tr>
+</template>
+
+<script>
+  Vue.component('the-story', {
+    template: "#template-story-raw",
+    props: ['story'],
+    methods: {
+      upvoteStory: function (story) {
+        story.upvotes++;
+        $.ajax({
+          url: "http://127.0.0.1:3000/api/stories/" + story.id,
+          type: "PATCH",
+          data: story
+        })
+      },
+
+      deleteStory: function (story) {
+        var index = vm.stories.indexOf(story);
+        vm.stories.splice(index, 1);
+
+        $.ajax({
+          url: "http://127.0.0.1:3000/api/stories" + story.id,
+          type: "DELETE"
+        })
+      }
+    }
+  });
+
+  var app = new Vue({
+    el: "#app",
+    data: {
+      stories: []
+    },
+    mounted: function() {
+      $.get('http://127.0.0.1:3000/api/stories', function(data) {
+        console.log(data)
+        app.stories = data
+      })
+    }
+  })
+</script>
+
