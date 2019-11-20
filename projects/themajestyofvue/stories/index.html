@@ -4,6 +4,17 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 <div id="app">
+  <div class="pagination">
+    <button @click="fetchStories(pagination.prev_page_url)"
+      :disabled="!pagination.prev_page_url">
+      Previous
+    </button>
+    <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span>
+    <button @click="fetchStories(pagination.next_page_url)"
+      :disabled="!pagination.next_page_url">
+      Next
+    </button>
+  </div>
   <table class="table table-striped">
     <tr>
       <th>#</th>
@@ -104,7 +115,8 @@
   var vm = new Vue({
     el: "#app",
     data: {
-      stories: []
+      stories: [],
+      pagination: {}
     },
     methods: {
       createStory: function () {
@@ -116,16 +128,30 @@
         this.stories.push(newStory)
       },
 
-      fetchStories: function () {
+      fetchStories: function (page_url) {
         var vm = this;
-        axios.get('http://127.0.0.1:3000/api/stories')
+        page_url = page_url || "http://127.0.0.1:3000/api/stories"
+        axios.get(page_url)
           .then(function (response) {
-            var storiesReady = response.data.map(function (story) {
+            var storiesReady = response.data.data.map(function (story) {
               story.editing = false;
               return story
             })
+
+            vm.makePagination(response.data)
             Vue.set(vm, 'stories', storiesReady)
           })
+      },
+
+      makePagination: function (data) {
+        var pagination = {
+          current_page: data.current_page,
+          last_page: data.last_page,
+          next_page_url: data.next_page_url,
+          prev_page_url: data.prev_page_url
+        }
+
+        Vue.set(vm, 'pagination', pagination)
       }
     },
     mounted: function() {
