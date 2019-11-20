@@ -1,6 +1,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 <div id="app">
   <table class="table table-striped">
@@ -14,22 +15,52 @@
       </tr>
     </tr>
   </table>
+
+  <p class="lead"> Here's a list of all your stories
+    <button @click="createStory()" class="btn btn-primary">
+      Add a new one?
+    </button>
+  </p>
 </div>
 
 <template id="template-story-raw">
   <tr>
     <td>{{story.id}}</td>
-    <td><span>{{story.plot}}</span></td>
-    <td><span>{{story.writer}}</span></td>
-    <td><span>{{story.upvotes}}</span></td>
     <td>
-      <div class="btn-group">
+      <input v-if="story.editing" v-model="story.plot" class="form-control">
+      <span v-else>{{story.plot}}</span>
+    </td>
+    <td>
+      <input v-if="story.editing" v-model="story.writer" class="form-control">
+      <span v-else>{{story.writer}}</span>
+    </td>
+
+    <td><span>{{story.upvotes}}</span></td>
+
+    <td>
+      <div v-if="!story.editing" class="btn-group">
         <buton @click="upvoteStory(story)" class="btn btn-primary">
           Upvote
         </buton>
 
         <buton @click="deleteStory(story)" class="btn btn-primary">
           Delete
+        </buton>
+
+        <buton @click="editStory(story)" class="btn btn-primary">
+          Edit
+        </buton>
+      </div>
+
+      <div v-else class="btn-group">
+        <buton v-if="story.id" @click="updateStory(story)" class="btn btn-primary">
+          Update Story
+        </buton>
+        <buton v-else @click="storeStory(story)" class="btn btn-success">
+          Save New Story
+        </buton>
+        <buton @click="story.editing=false" class="btn btn-default">
+          Cancel
         </buton>
       </div>
     </td>
@@ -41,6 +72,9 @@
     template: "#template-story-raw",
     props: ['story'],
     methods: {
+      editStory: function (story) {
+        story.editing = true;
+      },
       upvoteStory: function (story) {
         story.upvotes++;
         axios.patch('http://127.0.0.1:3000/api/stories/' + story.id, story)
@@ -50,6 +84,19 @@
         var index = this.$parent.stories.indexOf(story);
         this.$parent.stories.splice(index, 1);
         axios.delete('http://127.0.0.1:3000/api/stories/' + story.id)
+      },
+
+      updateStory: function (story) {
+        axios.patch('http://127.0.0.1:3000/api/stories/' + story.id, story)
+        story.editing = false
+      },
+
+      storeStory: function (story) {
+        axios.post('http://127.0.0.1:3000/api/stories/', story).then(function (response) {
+          Vue.set(story, 'id', response.data.id)
+          story.editing = false
+        })
+
       }
     }
   });
@@ -59,11 +106,30 @@
     data: {
       stories: []
     },
+    methods: {
+      createStory: function () {
+        var newStory = {
+          "plot": "",
+          "upvotes": 0,
+          "editing": true
+        }
+        this.stories.push(newStory)
+      },
+
+      fetchStories: function () {
+        var vm = this;
+        axios.get('http://127.0.0.1:3000/api/stories')
+          .then(function (response) {
+            var storiesReady = response.data.map(function (story) {
+              story.editing = false;
+              return story
+            })
+            Vue.set(vm, 'stories', storiesReady)
+          })
+      }
+    },
     mounted: function() {
-      axios.get('http://127.0.0.1:3000/api/stories')
-        .then(function (response) {
-          Vue.set(vm, 'stories', response.data)
-        })
+      this.fetchStories()
     }
   })
 </script>
